@@ -26,5 +26,5 @@ if (empty($users)) {
 
 require __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 var_dump($users);
-
+var_dump("测试vim编辑");
 ?>
