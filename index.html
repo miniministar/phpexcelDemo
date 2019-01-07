@@ -1,67 +1,60 @@
-<?php
+<!DOCTYPE html>
+<html>
+    <title>系统管理</title>
+    <meta charset="UTF-8">
+    <meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link type="text/css" rel="stylesheet" href="plugins/bootstrap/css/bootstrap.css">
+    <script src="plugins/jquery-3.3.1.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.js"></script>
+    <style>
+        .bg-gray{
+            background-color: gainsboro;
+        }
+    </style>
+<body>
+<div>
+    <div class="container-fluid">
+        <a href="index.php" class="btn btn-primary btn-sm">下载</a>
+        <div class="row">
+            <div class="col-sm-8 bg-info">小型和中型设备</div>
+            <div class="col-sm-16 bg-success">小型和中型设备</div>
+        </div>
+        <div class="row bg-primary">
+            <div class="col align-self-start bg-danger">水平对齐 靠左</div>
+            <div class="col align-self-center bg-danger">水平对齐 靠中</div>
+            <div class="col align-self-end bg-danger">水平对齐 靠右</div>
+        </div>
+        <div class="row justify-content-start">
+            <div class="col-sm-8">水平对齐 靠左</div>
+            <div class="col-sm-8">水平对齐 靠左</div>
+        </div>
+        <div class="row justify-content-center bg-warning">
+            <div class="col-sm-8 bg-info">水平对齐 靠中</div>
+            <div class="col-sm-8 bg-primary">水平对齐 靠中</div>
+        </div>
+        <div class="row justify-content-end bg-primary">
+            <div class="col-sm-8 bg-warning">水平对齐 靠右</div>
+            <div class="col-sm-8 bg-info">水平对齐 靠右</div>
+        </div>
+        <div class="row align-items-start bg-gray" style="height: 400px;">
+            <div class="col">垂直对齐 靠上</div>
+        </div>
+        <hr>
+        <div class="row align-items-center bg-gray" style="height: 400px;">
+            <div class="col">垂直对齐 靠中</div>
+        </div>
+        <hr>
+        <div class="row align-items-end bg-gray" style="height: 400px;">
+            <div class="col">垂直对齐 靠下</div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $(document).ready(function(){
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-$servername = 'localhost';
-$username = 'root';
-$password = '2222';
-
-try {
-    $conn = new PDO("mysql:host=$servername;dbname=nxdb_ty", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $conn->exec("set character set utf8");
-} catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMassage();
-}
-
-$stmt = $conn->prepare("select * from nc_user");
-$stmt->execute();
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if (empty($users)) {
-    exit("查无记录");
-}
-
-require __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
-
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-
-$spreadSheet = new Spreadsheet();
-$sheet = $spreadSheet->getActiveSheet();
-$sheet->setTitle("明细");
-
-$sheet->mergeCells('A1:C1');
-
-$sheet->setCellValue('A1', '用户情况一览表');
-
-$sheet->setCellValue('A2', '序号');
-$sheet->setCellValue('B2', '用户名');
-$sheet->setCellValue('C2', '名字');
-
-
-$i = 3;
-foreach ($users as $key => $value) {
-    $sheet->setCellValue('A' . ($key+$i), $key+1);
-    $sheet->setCellValue('B' . ($key+$i), $value['USERNAME']);
-    $sheet->setCellValue('C' . ($key+$i), $value['NAME']);
-}
-
-$writer = new Xlsx($spreadSheet);
-$fileName = '用户情况一览表.xlsx';
-$writer->save($fileName);
-$fileName = iconv('utf-8', 'gb2312', $fileName);
-
-
-ob_end_clean();
-header('Expires: Mon, 1 Apr 1974 05:00:00 GMT');
-header('Content-Type: application/vnd.ms-excel; charset=UTF-8');
-header('Last-Modified: ' . gmdate("D,d M YH:i:s") . ' GMT');
-header('Cache-Control: no-cache, must-revalidate');
-header('Pragma: no-cache');
-header('Content-Type:application/vnd.ms-excel');
-header('Content-Disposition: attachment; filename="' . $fileName . '"');
-readfile($fileName);
-unlink($fileName);
-?>
+    });
+</script>
+</html>
