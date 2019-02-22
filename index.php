@@ -4,11 +4,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $servername = 'localhost';
+$database = 'nxdb';
 $username = 'root';
 $password = '2222';
 
 try {
-    $conn = new PDO("mysql:host=$servername;dbname=nxdb_ty", $username, $password);
+    $conn = new PDO("mysql:host=$servername;dbname=$database", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec("set character set utf8");
 } catch(PDOException $e) {
